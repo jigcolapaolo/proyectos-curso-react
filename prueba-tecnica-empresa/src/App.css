@@ -1,0 +1,22 @@
+#root {
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  width: 100%;
+}
+
+.table--showColors tr:nth-child(odd) {
+  background: #4e0c0c;
+}
+
+.table--showColors tr:nth-child(even) {
+  background: rgb(62, 62, 168);
+}
+
+header {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 28px;
+  justify-content: center;
+  align-items: center;
+}
