@@ -20,3 +20,13 @@ export const FILTERS_BUTTONS = {
 } as const
 
 // Solo de lectura 'as const' para typescript
+
+
+// Reducer
+
+export const TODO_ACTION_TYPES = {
+    ADD_TODO: "ADD",
+    REMOVE_TODO: "REMOVE",
+    TOGGLE_COMPLETE_TODO: "TOGGLE_COMPLETE",
+    CLEAR_COMPLETED: "CLEAR_COMPLETED",
+} as const

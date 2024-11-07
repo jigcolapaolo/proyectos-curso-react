@@ -1,59 +1,70 @@
 import { useState } from "react";
 import { Todos } from "./components/Todos";
-import { Todo as TodoType, TodoId, FilterValue, TodoTitle } from "./types";
+import { FilterValue } from "./types";
 import { Footer } from "./components/Footer";
 import { TODO_FILTERS } from "./consts";
 import { Header } from "./components/Header";
+import { useTodos } from "./hooks/useTodos";
 
-const mockTodos = [
-  {
-    id: "1",
-    title: "Ver tutorial",
-    completed: true,
-  },
-  {
-    id: "2",
-    title: "Aprender React con Typescript",
-    completed: false,
-  },
-  {
-    id: "3",
-    title: "Aprender Next.js",
-    completed: false,
-  },
-];
+// const mockTodos = [
+//   {
+//     id: "1",
+//     title: "Ver tutorial",
+//     completed: true,
+//   },
+//   {
+//     id: "2",
+//     title: "Aprender React con Typescript",
+//     completed: false,
+//   },
+//   {
+//     id: "3",
+//     title: "Aprender Next.js",
+//     completed: false,
+//   },
+// ];
 
 const App: React.FC = () => {
-  const [todos, setTodos] = useState(mockTodos);
+  const { todos, addTodo, removeTodo, toggleCompleteTodo, clearCompleted } = useTodos();
+  // const [todos, setTodos] = useState(mockTodos);
   const [filterSelected, setFilterSelected] = useState<FilterValue>(TODO_FILTERS.ALL);
 
-  const handleRemove = ({ id }: TodoId): void => {
-    const newTodos = todos.filter(todo => todo.id !== id);
-    setTodos(newTodos);
-  }
+  // const handleRemove = ({ id }: TodoId): void => {
+  //   const newTodos = todos.filter(todo => todo.id !== id);
+  //   setTodos(newTodos);
+  // }
 
-  const handleCompleted = ({ id, completed }: Pick<TodoType, "id" | "completed">): void => {
-    const newTodos = todos.map(todo => {
-      if (todo.id === id) {
-        return {
-          ...todo,
-          completed
-        }
-      }
-      return todo
-    })
+  // const handleCompleted = ({ id, completed }: Pick<TodoType, "id" | "completed">): void => {
+  //   const newTodos = todos.map(todo => {
+  //     if (todo.id === id) {
+  //       return {
+  //         ...todo,
+  //         completed
+  //       }
+  //     }
+  //     return todo
+  //   })
 
-    setTodos(newTodos);
-  }
+  //   setTodos(newTodos);
+  // }
 
   const handleFilterChange = (filter: FilterValue): void => {
     setFilterSelected(filter)
   }
 
-  const handleRemoveAllCompleted = () => {
-    const newTodos = todos.filter(todo => !todo.completed);
-    setTodos(newTodos);
-  }
+  // const handleRemoveAllCompleted = () => {
+  //   const newTodos = todos.filter(todo => !todo.completed);
+  //   setTodos(newTodos);
+  // }
+
+  // const handleAddTodo = ({ title }: TodoTitle): void => {
+  //   const newTodo = {
+  //     id: crypto.randomUUID(),
+  //     title,
+  //     completed: false
+  //   }
+  //   setTodos([...todos, newTodo])
+  // }
 
   const activeCount = todos.filter(todo => !todo.completed).length
 
@@ -65,30 +76,22 @@ const App: React.FC = () => {
     return todo
   })
 
-  const handleAddTodo = ({ title }: TodoTitle): void => {
-    const newTodo = {
-      id: crypto.randomUUID(),
-      title,
-      completed: false
-    }
-    setTodos([...todos, newTodo])
-  }
 
   return (
     <div className="todoapp">
       <Header
-        onAddTodo={handleAddTodo}
+        onAddTodo={addTodo}
       />
       <Todos 
         todos={filteredTodos} 
-        onRemoveTodo={handleRemove} 
-        onToggleCompleteTodo={handleCompleted}
+        onRemoveTodo={removeTodo} 
+        onToggleCompleteTodo={toggleCompleteTodo}
       />
       <Footer 
         activeCount={activeCount}
         completedCount={completedCount}
         filterSelected={filterSelected} 
-        onClearCompleted={handleRemoveAllCompleted}
+        onClearCompleted={clearCompleted}
         handleFilterChange={handleFilterChange}
       />
     </div>
